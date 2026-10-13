@@ -6,18 +6,18 @@
 #include "AbilitySystem/WarriorAbilitySystemComponent.h"
 #include "AbilitySystem/Abilities/WarriorGameplayAbility.h"
 
-void UDataAsset_StartupDatabase::GiveToAbilitySystemComponent(UWarriorAbilitySystemComponent* InWarriorASCToGive,
+void UDataAsset_StartupDatabase::GiveToAbilitySystemComponent(UWarriorAbilitySystemComponent* InASCToGive,
                                                               int32 ApplyLevel)
 {
 	// WarriorASC가 없다는 건 게임 플레이 자체에 문제가 발생하므로 강제 크래시
-	check(InWarriorASCToGive);
+	check(InASCToGive);
 	
-	GrantAbilities(ActivateOnGivenAbilities, InWarriorASCToGive, ApplyLevel);
-	GrantAbilities(ReactiveAbilities, InWarriorASCToGive, ApplyLevel);
+	GrantAbilities(ActivateOnGivenAbilities, InASCToGive, ApplyLevel);
+	GrantAbilities(ReactiveAbilities, InASCToGive, ApplyLevel);
 }
 
 void UDataAsset_StartupDatabase::GrantAbilities(const TArray<TSubclassOf<UWarriorGameplayAbility>>& InAbilitiesToGive,
-	UWarriorAbilitySystemComponent* InWarriorASCToGive, int32 ApplyLevel)
+	UWarriorAbilitySystemComponent* InASCToGive, int32 ApplyLevel)
 {
 	if (InAbilitiesToGive.IsEmpty())
 	{
@@ -32,9 +32,9 @@ void UDataAsset_StartupDatabase::GrantAbilities(const TArray<TSubclassOf<UWarrio
 		}
 		
 		FGameplayAbilitySpec AbilitySpec(Ability);
-		AbilitySpec.SourceObject = InWarriorASCToGive->GetAvatarActor();
+		AbilitySpec.SourceObject = InASCToGive->GetAvatarActor();
 		AbilitySpec.Level = ApplyLevel;
 		
-		InWarriorASCToGive->GiveAbility(AbilitySpec);
+		InASCToGive->GiveAbility(AbilitySpec);
 	}
 }

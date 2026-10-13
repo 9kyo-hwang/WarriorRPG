@@ -15,6 +15,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "InputActionValue.h"
 #include "AbilitySystem/WarriorAbilitySystemComponent.h"
+#include "DataAssets/StartupData/DataAsset_StartupDatabase.h"
 
 AWarriorHeroCharacter::AWarriorHeroCharacter()
 {
@@ -46,12 +47,14 @@ void AWarriorHeroCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 	
-	if (WarriorAbilitySystemComponent && WarriorAttributeSet)
+	// Super에서 StartupData 널 검사를 수행하고 있음
+	if (!CharacterStartupData.IsNull())
 	{
-		const FString ASCText = FString::Printf(TEXT("Owner Actor: %s, Avatar Actor: %s"), *WarriorAbilitySystemComponent->GetOwnerActor()->GetActorLabel(), *WarriorAbilitySystemComponent->GetAvatarActor()->GetActorLabel());
-		
-		Debug::Print(TEXT("AbilitySystemComponent valid. ") + ASCText, FColor::Green);
-		Debug::Print(TEXT("AttributeSet valid."), FColor::Green);
+		// 빙의가 완료되면 데이터 에셋 동기 로드 수행
+		if (UDataAsset_StartupDatabase* LoadedData = CharacterStartupData.LoadSynchronous())
+		{
+			LoadedData->GiveToAbilitySystemComponent(WarriorAbilitySystemComponent);
+		}
 	}
 }
 

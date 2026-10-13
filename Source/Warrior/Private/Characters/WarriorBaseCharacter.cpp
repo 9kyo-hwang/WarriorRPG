@@ -30,6 +30,9 @@ void AWarriorBaseCharacter::PossessedBy(AController* NewController)
 	{
 		// 여기서는 컴포넌트 소유 액터 == 월드에 배치되는 액터
 		WarriorAbilitySystemComponent->InitAbilityActorInfo(this, this);
+		
+		// 하위 클래스(예: Hero)에서 StartupData를 사용할 때 널이 아님을 보장하기 위해 여기서 ensure로 체크
+		ensureMsgf(!CharacterStartupData.IsNull(), TEXT("Forgot to assign startup data to %s"), *GetName());
 	}
 }
 
