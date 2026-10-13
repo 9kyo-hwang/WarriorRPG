@@ -17,7 +17,7 @@ void UWarriorGameplayAbility::OnGiveAbility(const FGameplayAbilityActorInfo* Act
 	// OnGiven 활성화 정책 어빌리티는 주어지는 즉시 활성화를 시도
 	if (AbilityActivationPolicy == EWarriorAbilityActivationPolicy::OnGiven)
 	{
-		if (ActorInfo && Spec.IsActive())
+		if (ActorInfo && !Spec.IsActive())
 		{
 			ActorInfo->AbilitySystemComponent->TryActivateAbility(Spec.Handle);
 		}
