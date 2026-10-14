@@ -6,6 +6,8 @@
 #include "Characters/WarriorBaseCharacter.h"
 #include "WarriorHeroCharacter.generated.h"
 
+class UHeroCombatComponent;
+
 /**
  * 
  */
@@ -16,6 +18,8 @@ class WARRIOR_API AWarriorHeroCharacter : public AWarriorBaseCharacter
 	
 public:
 	AWarriorHeroCharacter();
+	
+	FORCEINLINE UHeroCombatComponent* GetHeroCombatComponent() const { return HeroCombatComponent; }
 	
 protected:
 	virtual void PossessedBy(AController* NewController) override;
@@ -30,6 +34,9 @@ private:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Camera", meta=(AllowPrivateAccess=true))
 	TObjectPtr<class UCameraComponent> FollowCamera;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Combat", meta=(AllowPrivateAccess=true))
+	TObjectPtr<UHeroCombatComponent> HeroCombatComponent;
 #pragma endregion
 	
 #pragma region Inputs

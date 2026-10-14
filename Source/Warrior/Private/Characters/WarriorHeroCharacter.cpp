@@ -14,7 +14,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "InputActionValue.h"
-#include "AbilitySystem/WarriorAbilitySystemComponent.h"
+#include "Components/Combat/HeroCombatComponent.h"
 #include "DataAssets/StartupData/DataAsset_StartupDatabase.h"
 
 AWarriorHeroCharacter::AWarriorHeroCharacter()
@@ -41,6 +41,8 @@ AWarriorHeroCharacter::AWarriorHeroCharacter()
 	GetCharacterMovement()->RotationRate = FRotator(0, 500, 0);
 	GetCharacterMovement()->MaxWalkSpeed = 400.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
+	
+	HeroCombatComponent = CreateDefaultSubobject<UHeroCombatComponent>(TEXT("HeroCombatComponent"));
 }
 
 void AWarriorHeroCharacter::PossessedBy(AController* NewController)
