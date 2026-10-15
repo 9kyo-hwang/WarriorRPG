@@ -4,6 +4,8 @@
 #include "AbilitySystem/Abilities/WarriorGameplayAbility.h"
 #include <AbilitySystem/WarriorAbilitySystemComponent.h>
 
+#include "Components/Combat/PawnCombatComponent.h"
+
 /*
  * ASC에 어빌리티가 부여된 직후 호출
  * FGameplayAbilityActorInfo: 어빌리티를 사용하는 액터의 연관 데이터 캐싱 구조체
@@ -38,4 +40,12 @@ void UWarriorGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle Handle
 			ActorInfo->AbilitySystemComponent->ClearAbility(Handle);
 		}
 	}
+}
+
+// GA Blueprint에서 PawnCombatComponent를 얻기 위한 함수
+UPawnCombatComponent* UWarriorGameplayAbility::GetPawnCombatComponentFromActorInfo() const
+{
+	// 액터가 소유한 모든 컴포넌트를 순회해 처음으로 일치하는 타입의 컴포넌트 반환
+	// Hero라면 HeroCombatComponent가 반환됨
+	return GetAvatarActorFromActorInfo()->FindComponentByClass<UPawnCombatComponent>();
 }
