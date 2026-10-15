@@ -7,6 +7,8 @@
 #include "WarriorHeroCharacter.generated.h"
 
 class UHeroCombatComponent;
+struct FInputActionValue;
+struct FGameplayTag;
 
 /**
  * 
@@ -44,8 +46,11 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="CharacterData", meta=(AllowPrivateAccess=true))
 	TObjectPtr<class UDataAsset_InputConfig> InputConfigDataAsset;	// 강참조, Editor에서 할당
 	
-	void Input_Move(const struct FInputActionValue& InputActionValue);
-	void Input_Look(const struct FInputActionValue& InputActionValue);
+	void Input_Move(const FInputActionValue& InputActionValue);
+	void Input_Look(const FInputActionValue& InputActionValue);
+
+	void Input_AbilityInputPressed(FGameplayTag InInputTag);
+	void Input_AbilityInputReleased(FGameplayTag InInputTag);
 	
 #pragma endregion
 	

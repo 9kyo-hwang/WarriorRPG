@@ -3,19 +3,20 @@
 
 #include "Characters/WarriorHeroCharacter.h"
 
-#include <WarriorDebugHelper.h>
+#include "Components/Input/WarriorInputComponent.h"
+#include "Components/Combat/HeroCombatComponent.h"
+#include "DataAssets/Input/DataAsset_InputConfig.h"
+#include "DataAssets/StartupData/DataAsset_StartupDatabase.h"
 
 #include "EnhancedInputSubsystems.h"
 #include "WarriorGameplayTags.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "Components/Input/WarriorInputComponent.h"
-#include "DataAssets/Input/DataAsset_InputConfig.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "InputActionValue.h"
-#include "Components/Combat/HeroCombatComponent.h"
-#include "DataAssets/StartupData/DataAsset_StartupDatabase.h"
+#include "GameplayTagContainer.h"
+#include "AbilitySystem/WarriorAbilitySystemComponent.h"
 
 AWarriorHeroCharacter::AWarriorHeroCharacter()
 {
@@ -78,6 +79,7 @@ void AWarriorHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 		UWarriorInputComponent* WarriorInputComponent = CastChecked<UWarriorInputComponent>(PlayerInputComponent);
 		WarriorInputComponent->BindNativeInputAction(InputConfigDataAsset, WarriorGameplayTags::InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
 		WarriorInputComponent->BindNativeInputAction(InputConfigDataAsset, WarriorGameplayTags::InputTag_Look, ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
+		WarriorInputComponent->BindAbilityInputAction(InputConfigDataAsset, this, &ThisClass::Input_AbilityInputPressed, &ThisClass::Input_AbilityInputReleased);
 	}
 }
 
@@ -116,4 +118,16 @@ void AWarriorHeroCharacter::Input_Look(const FInputActionValue& InputActionValue
 	{
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+void AWarriorHeroCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)
+{
+	// 입력 들어오면 콜백 -> 넘어온 InputTag를 ASC에 전달 -> ...
+	WarriorAbilitySystemComponent->OnAbilityInputPressed(InInputTag);
+}
+
+void AWarriorHeroCharacter::Input_AbilityInputReleased(FGameplayTag InInputTag)
+{
+	// 이렇게 전달하면, 어빌리티 활성화는 이제 ASC에 달려있음
+	WarriorAbilitySystemComponent->OnAbilityInputReleased(InInputTag);
 }
