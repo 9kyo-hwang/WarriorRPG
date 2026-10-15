@@ -7,6 +7,9 @@
 #include "GameplayTagContainer.h"
 #include "DataAsset_InputConfig.generated.h"
 
+class UInputAction;
+class UInputMappingContext;
+
 USTRUCT(BlueprintType)
 struct FWarriorInputActionConfig
 {
@@ -17,7 +20,12 @@ public:
 	FGameplayTag InputTag;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TObjectPtr<class UInputAction> InputAction;
+	TObjectPtr<UInputAction> InputAction;
+	
+	bool IsValid()	const
+	{
+		return InputTag.IsValid() && nullptr != InputAction;
+	}
 };
 
 /**
@@ -30,10 +38,14 @@ class WARRIOR_API UDataAsset_InputConfig : public UDataAsset
 	
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TObjectPtr<class UInputMappingContext> DefaultMappingContext;
+	TObjectPtr<UInputMappingContext> DefaultMappingContext;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta=(TitleProperty="InputTag"))
 	TArray<FWarriorInputActionConfig> NativeInputActions;
 	
 	UInputAction* FindNativeInputActionByTag(const FGameplayTag& InInputTag) const;
+	
+	// 기본 입력 액션과 달리 어빌리티에서는 헬퍼 함수 불필요
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta=(TitleProperty="InputTag"))
+	TArray<FWarriorInputActionConfig> AbilityInputActions;
 };
