@@ -6,6 +6,10 @@
 #include "Characters/WarriorBaseCharacter.h"
 #include "WarriorHeroCharacter.generated.h"
 
+class UHeroCombatComponent;
+struct FInputActionValue;
+struct FGameplayTag;
+
 /**
  * 
  */
@@ -16,6 +20,8 @@ class WARRIOR_API AWarriorHeroCharacter : public AWarriorBaseCharacter
 	
 public:
 	AWarriorHeroCharacter();
+	
+	FORCEINLINE UHeroCombatComponent* GetHeroCombatComponent() const { return HeroCombatComponent; }
 	
 protected:
 	virtual void PossessedBy(AController* NewController) override;
@@ -30,6 +36,9 @@ private:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Camera", meta=(AllowPrivateAccess=true))
 	TObjectPtr<class UCameraComponent> FollowCamera;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Combat", meta=(AllowPrivateAccess=true))
+	TObjectPtr<UHeroCombatComponent> HeroCombatComponent;
 #pragma endregion
 	
 #pragma region Inputs
@@ -37,8 +46,11 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="CharacterData", meta=(AllowPrivateAccess=true))
 	TObjectPtr<class UDataAsset_InputConfig> InputConfigDataAsset;	// 강참조, Editor에서 할당
 	
-	void Input_Move(const struct FInputActionValue& InputActionValue);
-	void Input_Look(const struct FInputActionValue& InputActionValue);
+	void Input_Move(const FInputActionValue& InputActionValue);
+	void Input_Look(const FInputActionValue& InputActionValue);
+
+	void Input_AbilityInputPressed(FGameplayTag InInputTag);
+	void Input_AbilityInputReleased(FGameplayTag InInputTag);
 	
 #pragma endregion
 	
