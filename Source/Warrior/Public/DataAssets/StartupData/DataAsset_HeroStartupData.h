@@ -4,23 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "DataAssets/StartupData/DataAsset_StartupDatabase.h"
-#include "GameplayTagContainer.h"
 #include "DataAsset_HeroStartupData.generated.h"
 
-// Startup에서 어빌리티를 위한 입력 태그 부여용 구조체
-USTRUCT(BlueprintType)
-struct FWarriorHeroAbilitySet
-{
-	GENERATED_BODY()
-	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta=(Categories="InputTag"))
-	FGameplayTag InputTag;
-	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSubclassOf<UWarriorGameplayAbility> AbilityToGrant;	// Hero에게 부여할 GA
-	
-	bool IsValid() const;
-};
+// HeroAbilitySet은 WarriorStructTypes.h로 이관
 
 /**
  * 
@@ -35,5 +21,5 @@ public:
 	
 private:
 	UPROPERTY(EditDefaultsOnly, Category="StartupData", meta=(TitleProperty="InputTag"))
-	TArray<FWarriorHeroAbilitySet> HeroStartupAbilitySets;
+	TArray<struct FWarriorHeroAbilitySet> HeroStartupAbilitySets;
 };
