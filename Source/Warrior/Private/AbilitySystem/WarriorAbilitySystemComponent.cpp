@@ -63,3 +63,23 @@ void UWarriorAbilitySystemComponent::GrantHeroWeaponAbilities(
 		}
 	}
 }
+
+void UWarriorAbilitySystemComponent::RemoveGrantedHeroWeaponAbilities(
+	TArray<FGameplayAbilitySpecHandle>& InSpecHandlesToRemove)
+{
+	if (InSpecHandlesToRemove.IsEmpty())
+	{
+		return;
+	}
+	
+	for (const FGameplayAbilitySpecHandle& SpecHandle : InSpecHandlesToRemove)
+	{
+		if (SpecHandle.IsValid())
+		{
+			ClearAbility(SpecHandle);
+		}
+	}
+	
+	// 어빌리티 모두 지웠으면 배열도 Clear
+	InSpecHandlesToRemove.Empty();
+}
