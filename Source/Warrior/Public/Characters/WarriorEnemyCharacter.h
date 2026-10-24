@@ -19,7 +19,14 @@ class WARRIOR_API AWarriorEnemyCharacter : public AWarriorBaseCharacter
 public:
 	AWarriorEnemyCharacter();
 	
+protected:
+	virtual void PossessedBy(AController* NewController) override;
+	
+public:
 	FORCEINLINE UEnemyCombatComponent* GetEnemyCombatComponent() const { return EnemyCombatComponent;}
+	
+private:
+	void InitEnemyStartupData();
 	
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Combat")
