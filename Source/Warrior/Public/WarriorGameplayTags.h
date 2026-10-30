@@ -30,3 +30,4 @@ namespace WarriorGameplayTags
 	// Enemy Tags
 	WARRIOR_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Weapon);
 }
+
