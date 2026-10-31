@@ -30,6 +30,9 @@ public:
 	UFUNCTION(BlueprintPure, Category="Warrior|Ability")
 	UHeroCombatComponent* GetHeroCombatComponentFromActorInfo();
 	
+	UFUNCTION(BlueprintPure, Category="Warrior|Ability")
+	FGameplayEffectSpecHandle MakeHeroDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InCurrentComboCount);
+	
 private:
 	// HeroCharacter는 자주 사용될 건데, 매번 캐스팅하는 것보단 캐싱해두는 것이 좋음
 	// 약참조로 가리키기(AbilityActorInfo 내부에서도 이렇게 사용)
