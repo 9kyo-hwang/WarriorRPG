@@ -54,16 +54,15 @@ void UPawnCombatComponent::ToggleWeaponCollision(bool bShouldEnable, EToggleDama
 		
 		check(WeaponToToggle);
 		
-		// 이전에 열어둔 충돌 박스 Getter
 		if (bShouldEnable)
 		{
 			WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-			Debug::Print(WeaponToToggle->GetName() + TEXT(" collision enabled"), FColor::Green);
 		}
 		else
 		{
 			WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-			Debug::Print(WeaponToToggle->GetName() + TEXT(" collision disabled"), FColor::Red);
 		}
 	}
+	
+	// @TODO: 몸통 Collision Box 처리. 내 몸통이 뭔가로부터 타격 받았는지 인지하기 위함인가?
 }
