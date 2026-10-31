@@ -19,11 +19,12 @@ class WARRIOR_API AWarriorEnemyCharacter : public AWarriorBaseCharacter
 public:
 	AWarriorEnemyCharacter();
 	
+	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
+	
+	FORCEINLINE UEnemyCombatComponent* GetEnemyCombatComponent() const { return EnemyCombatComponent; }
+	
 protected:
 	virtual void PossessedBy(AController* NewController) override;
-	
-public:
-	FORCEINLINE UEnemyCombatComponent* GetEnemyCombatComponent() const { return EnemyCombatComponent;}
 	
 private:
 	void InitEnemyStartupData();
