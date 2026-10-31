@@ -36,7 +36,8 @@ void AWarriorWeaponBase::OnCollisionBoxBeginOverlap(UPrimitiveComponent* Overlap
 		// Player에게만 걸리는 검사. 무기 소지자와 타격자가 같으면 자해(?)
 		if (WeaponOwningPawn != HitPawn)
 		{
-			Debug::Print(GetName() + TEXT(" begin overlap with ") + HitPawn->GetName(), FColor::Green);
+			// 무기가 OtherActor에게 닿았음을 통지
+			OnWeaponHitTarget.ExecuteIfBound(OtherActor);
 		}
 		
 		// @TODO: 적 캐릭터 타격 판정
@@ -56,7 +57,8 @@ void AWarriorWeaponBase::OnCollisionBoxEndOverlap(UPrimitiveComponent* Overlappe
 		// Player에게만 걸리는 검사. 무기 소지자와 타격자가 같으면 자해(?)
 		if (WeaponOwningPawn != HitPawn)
 		{
-			Debug::Print(GetName() + TEXT(" end overlap with ") + HitPawn->GetName(), FColor::Red);
+			// 무기가 OtherActor로부터 빠져나왔음을 통지
+			OnWeaponPulledFromTarget.ExecuteIfBound(OtherActor);
 		}
 		
 		// @TODO: 적 캐릭터 타격 판정

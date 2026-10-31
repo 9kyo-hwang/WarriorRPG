@@ -8,6 +8,8 @@
 
 class UBoxComponent;
 
+DECLARE_DELEGATE_OneParam(FOnTargetInteractedDelegate, AActor* /*Target*/)
+
 UCLASS()
 class WARRIOR_API AWarriorWeaponBase : public AActor
 {
@@ -18,6 +20,9 @@ public:
 	AWarriorWeaponBase();
 
 	FORCEINLINE UBoxComponent* GetWeaponCollisionBox() const{ return WeaponCollisionBox;}
+	
+	FOnTargetInteractedDelegate OnWeaponHitTarget;			// BeginOverlap용
+	FOnTargetInteractedDelegate OnWeaponPulledFromTarget;	// EndOverlap용
 	
 protected:
 	// Dynamic Multicast Delegate -> UFUNCTION 필요

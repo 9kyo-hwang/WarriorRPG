@@ -17,6 +17,9 @@ void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegis
 	check(InWeaponToRegister);
 	
 	CharacterCarriedWeaponMap.Emplace(InWeaponTagToRegister, InWeaponToRegister);
+	InWeaponToRegister->OnWeaponHitTarget.BindUObject(this, &ThisClass::OnHitTargetActor);
+	InWeaponToRegister->OnWeaponPulledFromTarget.BindUObject(this, &ThisClass::OnWeaponPulledFromTargetActor);
+	
 	if (bRegisterAsEquippedWeapon)
 	{
 		CurrentEquippedWeaponTag = InWeaponTagToRegister;
@@ -65,4 +68,14 @@ void UPawnCombatComponent::ToggleWeaponCollision(bool bShouldEnable, EToggleDama
 	}
 	
 	// @TODO: 몸통 Collision Box 처리. 내 몸통이 뭔가로부터 타격 받았는지 인지하기 위함인가?
+}
+
+void UPawnCombatComponent::OnHitTargetActor(AActor* HitActor)
+{
+	// Nothing.
+}
+
+void UPawnCombatComponent::OnWeaponPulledFromTargetActor(AActor* InteractedActor)
+{
+	// Nothing.
 }
