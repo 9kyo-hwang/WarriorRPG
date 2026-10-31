@@ -39,7 +39,7 @@ public:
 	AWarriorWeaponBase* GetCharacterCurrentEquippedWeapon() const;
 	
 	UFUNCTION(BlueprintCallable, Category="Warrior|Combat")
-	void ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType = EToggleDamageType::CurrentEquippedWeapon) const;
+	void ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType = EToggleDamageType::CurrentEquippedWeapon);
 	
 	virtual void OnHitTargetActor(AActor* HitActor);
 	virtual void OnWeaponPulledFromTargetActor(AActor* InteractedActor);
@@ -47,6 +47,9 @@ public:
 public:
 	UPROPERTY(BlueprintReadWrite, Category="Warrior|Combat")
 	FGameplayTag CurrentEquippedWeaponTag;
+	
+protected:
+	TArray<TObjectPtr<AActor>> OverlappedActors;
 	
 private:
 	// 적, 플레이어 모두 가능해야 하는 동작: 소환된 무기 저장
