@@ -57,8 +57,6 @@ void AWarriorEnemyCharacter::InitEnemyStartupData()
 					if (UDataAsset_StartupDatabase* LoadedData = This->CharacterStartupData.Get())
 					{
 						LoadedData->GiveToAbilitySystemComponent(This->WarriorAbilitySystemComponent);
-						
-						Debug::Print(TEXT("Enemy Startup Data Loaded"), FColor::Green);
 					}
 				}
 			}));
