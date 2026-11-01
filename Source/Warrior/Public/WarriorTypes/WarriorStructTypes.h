@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameplayTagContainer.h"
+#include "ScalableFloat.h"
 #include "WarriorStructTypes.generated.h"
 
 // Startup에서 어빌리티를 위한 입력 태그 부여용 구조체였던 것
@@ -34,4 +35,8 @@ struct FWarriorHeroWeaponData
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<class UInputMappingContext> WeaponInputMappingContext;
+	
+	// CurveTable을 통해 무기 기본 데미지를 설정할 예정
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FScalableFloat WeaponBaseDamage;
 };

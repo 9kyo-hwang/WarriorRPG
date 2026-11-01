@@ -13,6 +13,16 @@ AWarriorHeroWeapon* UHeroCombatComponent::GetHeroCarriedWeaponByTag(FGameplayTag
 	return Cast<AWarriorHeroWeapon>(GetCharacterCarriedWeaponByTag(InWeaponTag));
 }
 
+AWarriorHeroWeapon* UHeroCombatComponent::GetHeroCurrentEquippedWeapon() const
+{
+	return Cast<AWarriorHeroWeapon>(GetCharacterCurrentEquippedWeapon());
+}
+
+float UHeroCombatComponent::GetHeroCurrentEquippedWeaponDamageAtLevel(float InLevel) const
+{
+	return GetHeroCurrentEquippedWeapon()->HeroWeaponData.WeaponBaseDamage.GetValueAtLevel(InLevel);	
+}
+
 void UHeroCombatComponent::OnHitTargetActor(AActor* HitActor)
 {
 	// PawnCombatComponent가 공격한 대상체 목록을 들고 있음
