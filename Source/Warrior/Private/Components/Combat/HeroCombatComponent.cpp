@@ -41,10 +41,13 @@ void UHeroCombatComponent::OnHitTargetActor(AActor* HitActor)
 	Data.Target = HitActor;
 	
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPawn(), WarriorGameplayTags::Shared_Event_MeleeHit, Data);
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPawn(), WarriorGameplayTags::Player_Event_HitPause, FGameplayEventData());
 }
 
 void UHeroCombatComponent::OnWeaponPulledFromTargetActor(AActor* InteractedActor)
 {
 	// Begin에서 등록한 HitActor를 지우는 작업은 PawnCombatComponent에서
 	// ToggleWeaponCollision에서 충돌 판정 끌 때 한 번에 처리
+	
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPawn(), WarriorGameplayTags::Player_Event_HitPause, FGameplayEventData());
 }
