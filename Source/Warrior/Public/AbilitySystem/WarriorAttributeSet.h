@@ -24,6 +24,12 @@ class WARRIOR_API UWarriorAttributeSet : public UAttributeSet
 public:
 	UWarriorAttributeSet();
 	
+	/**
+	 *	GE가 실행되어 어트리뷰트 BaseValue 수정 직후 호출. 이 시점에서는 이미 값이 확정되어 함수 내부에서 속성 값을 직접 되돌리거나 수정할 수 없음
+	 *	실행(Execute) 단계에서만 호출. 버프(예: 5초동안 이동속도 10 증가)같은 적용(Application) 단계에서는 호출 X
+	 */
+	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData &Data) override;
+	
 	UPROPERTY(BlueprintReadOnly, Category="Heatlh")
 	FGameplayAttributeData CurrentHealth;
 	ATTRIBUTE_ACCESSORS(UWarriorAttributeSet, CurrentHealth)
