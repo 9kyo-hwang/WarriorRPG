@@ -47,4 +47,9 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category="Damage")
 	FGameplayAttributeData DefensePower;
 	ATTRIBUTE_ACCESSORS(UWarriorAttributeSet, DefensePower)
+	
+	// 데미지 적용 시 Taken 통해서 체력 변경: 임시(Placeholder) 어트리뷰트
+	UPROPERTY(BlueprintReadOnly, Category="Damage")
+	FGameplayAttributeData DamageTaken;	
+	ATTRIBUTE_ACCESSORS(UWarriorAttributeSet, DamageTaken)
 };
