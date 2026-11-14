@@ -108,7 +108,7 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 	
 	// 단순하면서 깔끔한 수식, 적에게도 똑같이 적용 가능(단 적은 콤보 카운트가 없어서 바로 여기로 직행)
 	const float FinalDamageDone = BaseDamage * SourceAttackPower / TargetDefensePower;
-	Debug::Print(TEXT("FinalDamageDone"), FinalDamageDone);
+	// Debug::Print(TEXT("FinalDamageDone"), FinalDamageDone);
 	
 	if (FinalDamageDone > 0.f)
 	{
