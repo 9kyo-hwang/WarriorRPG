@@ -7,6 +7,7 @@
 #include "WarriorEnemyCharacter.generated.h"
 
 class UEnemyCombatComponent;
+class UEnemyUIComponent;
 
 /**
  * 
@@ -20,8 +21,8 @@ public:
 	AWarriorEnemyCharacter();
 	
 	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
-	
 	FORCEINLINE UEnemyCombatComponent* GetEnemyCombatComponent() const { return EnemyCombatComponent; }
+	virtual UPawnUIComponent* GetPawnUIComponent() const override;
 	
 protected:
 	virtual void PossessedBy(AController* NewController) override;
@@ -32,4 +33,7 @@ private:
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Combat")
 	TObjectPtr<UEnemyCombatComponent> EnemyCombatComponent;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="UI")
+	TObjectPtr<UEnemyUIComponent> EnemyUIComponent;
 };

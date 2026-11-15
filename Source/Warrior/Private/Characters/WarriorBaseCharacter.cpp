@@ -24,8 +24,12 @@ UAbilitySystemComponent* AWarriorBaseCharacter::GetAbilitySystemComponent() cons
 
 UPawnCombatComponent* AWarriorBaseCharacter::GetPawnCombatComponent() const
 {
-	// 베이스는 null 반환 -> 자식에서 각자 것 반환
-	return nullptr;
+	return nullptr;	// 베이스는 null 반환 -> 자식에서 각자 것 반환
+}
+
+UPawnUIComponent* AWarriorBaseCharacter::GetPawnUIComponent() const
+{
+	return nullptr;	// 베이스는 null 반환 -> 자식에서 각자 것 반환
 }
 
 void AWarriorBaseCharacter::PossessedBy(AController* NewController)
