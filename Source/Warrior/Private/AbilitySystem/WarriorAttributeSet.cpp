@@ -6,6 +6,9 @@
 #include "WarriorDebugHelper.h"
 #include "WarriorFunctionLibrary.h"
 #include "WarriorGameplayTags.h"
+#include "Components/UI/HeroUIComponent.h"
+#include "Components/UI/PawnUIComponent.h"
+#include "Interfaces/PawnUIInterface.h"
 
 UWarriorAttributeSet::UWarriorAttributeSet()
 {
@@ -26,16 +29,35 @@ void UWarriorAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCal
 {
 	Super::PostGameplayEffectExecute(Data);
 	
+	if (!CachedPawnUIInterface.IsValid())
+	{
+		// Cast 하는 것과 동일한 동작
+		CachedPawnUIInterface = TWeakInterfacePtr<IPawnUIInterface>(Data.Target.GetAvatarActor());
+		// CachedPawnUIInterface = Cast<IPawnUIInterface>(Data.Target.GetAvatarActor());
+	}
+	
+	checkf(CachedPawnUIInterface.IsValid(), TEXT("%s didn't implement IPawnUIInterface"), *Data.Target.GetAvatarActor()->GetActorNameOrLabel());
+	
+	UPawnUIComponent* PawnUIComponent = CachedPawnUIInterface->GetPawnUIComponent();
+	checkf(PawnUIComponent, TEXT("Couldn't extract a PawnUIComponent from %s"), *Data.Target.GetAvatarActor()->GetActorNameOrLabel());
+	
 	if (Data.EvaluatedData.Attribute == GetCurrentHealthAttribute())
 	{
 		const float NewCurrentHealth = FMath::Clamp(GetCurrentHealth(), 0.f, GetMaxHealth());
 		SetCurrentHealth(NewCurrentHealth);
+		PawnUIComponent->OnCurrentHealthChanged.Broadcast(GetCurrentHealth() / GetMaxHealth());
 	}
 	
 	if (Data.EvaluatedData.Attribute == GetCurrentRageAttribute())
 	{
 		const float NewCurrentRage = FMath::Clamp(GetCurrentRage(), 0.f, GetMaxRage());
 		SetCurrentRage(NewCurrentRage);
+		
+		// Hero만 Rage를 들고 있어서, 인터페이스에 HeroUIComponent Getter를 추가해서 델리게이트 접근
+		if (UHeroUIComponent* HeroUIComponent = CachedPawnUIInterface->GetHeroUIComponent())
+		{
+			HeroUIComponent->OnCurrentRageChanged.Broadcast(GetCurrentRage() / GetMaxRage());
+		}
 	}
 	
 	if (Data.EvaluatedData.Attribute == GetDamageTakenAttribute())
@@ -54,7 +76,7 @@ void UWarriorAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCal
 		
 		Debug::Print(DebugString, FColor::Green);
 		
-		// @TODO: Notify the UI
+		PawnUIComponent->OnCurrentHealthChanged.Broadcast(GetCurrentHealth() / GetMaxHealth());
 		
 		if (NewCurrentHealth == 0.f)
 		{

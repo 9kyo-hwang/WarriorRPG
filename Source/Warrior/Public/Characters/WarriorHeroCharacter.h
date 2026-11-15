@@ -26,6 +26,7 @@ public:
 	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
 	FORCEINLINE UHeroCombatComponent* GetHeroCombatComponent() const { return HeroCombatComponent; }
 	virtual UPawnUIComponent* GetPawnUIComponent() const override;
+	FORCEINLINE virtual UHeroUIComponent* GetHeroUIComponent() const override { return HeroUIComponent; }
 	
 protected:
 	virtual void PossessedBy(AController* NewController) override;

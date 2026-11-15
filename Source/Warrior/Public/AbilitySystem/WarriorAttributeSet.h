@@ -13,6 +13,7 @@
 	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)               
 
+class IPawnUIInterface;
 /**
  * 
  */
@@ -58,4 +59,8 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category="Damage")
 	FGameplayAttributeData DamageTaken;	
 	ATTRIBUTE_ACCESSORS(UWarriorAttributeSet, DamageTaken)
+	
+private:
+	// GE 실행될 때마다 캐스팅하기 싫어서 인터페이스 약참조 캐시
+	TWeakInterfacePtr<IPawnUIInterface> CachedPawnUIInterface;
 };
