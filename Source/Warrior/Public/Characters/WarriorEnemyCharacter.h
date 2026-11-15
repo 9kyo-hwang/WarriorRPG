@@ -23,6 +23,7 @@ public:
 	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
 	FORCEINLINE UEnemyCombatComponent* GetEnemyCombatComponent() const { return EnemyCombatComponent; }
 	virtual UPawnUIComponent* GetPawnUIComponent() const override;
+	FORCEINLINE virtual UEnemyUIComponent* GetEnemyUIComponent() const override { return EnemyUIComponent; }
 	
 protected:
 	virtual void PossessedBy(AController* NewController) override;

@@ -3,6 +3,7 @@
 
 #include "Widgets/WarriorWidgetBase.h"
 
+#include "Components/UI/EnemyUIComponent.h"
 #include "Interfaces/PawnUIInterface.h"
 
 void UWarriorWidgetBase::NativeOnInitialized()
@@ -17,5 +18,17 @@ void UWarriorWidgetBase::NativeOnInitialized()
 			// 호출 == 위젯 초기화됐고, HeroUIComponent가 유효함
 			BP_OnOwningHeroUIComponentInitialized(HeroUIComponent);
 		}
+	}
+}
+
+void UWarriorWidgetBase::InitEnemyCreatedWidget(AActor* OwningEnemyActor)
+{
+	if (IPawnUIInterface* PawnUIInterface = Cast<IPawnUIInterface>(OwningEnemyActor))
+	{
+		// 여기 통해서 EnemyUIComponent 얻는 건 무조건 유효해야 함
+		UEnemyUIComponent* EnemyUIComponent = PawnUIInterface->GetEnemyUIComponent();
+		checkf(EnemyUIComponent, TEXT("Failed to extract an EnemyUIComponent from %s"), *OwningEnemyActor->GetActorNameOrLabel());
+		
+		BP_OnOwningEnemyUIComponentInitialized(EnemyUIComponent);
 	}
 }
