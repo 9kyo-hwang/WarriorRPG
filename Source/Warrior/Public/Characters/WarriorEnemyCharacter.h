@@ -8,6 +8,7 @@
 
 class UEnemyCombatComponent;
 class UEnemyUIComponent;
+class UWidgetComponent;
 
 /**
  * 
@@ -26,6 +27,7 @@ public:
 	FORCEINLINE virtual UEnemyUIComponent* GetEnemyUIComponent() const override { return EnemyUIComponent; }
 	
 protected:
+	virtual void BeginPlay() override;
 	virtual void PossessedBy(AController* NewController) override;
 	
 private:
@@ -37,4 +39,7 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="UI")
 	TObjectPtr<UEnemyUIComponent> EnemyUIComponent;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="UI")
+	TObjectPtr<UWidgetComponent> EnemyHealthWidgetComponent;
 };
