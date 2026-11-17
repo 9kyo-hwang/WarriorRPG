@@ -39,4 +39,7 @@ struct FWarriorHeroWeaponData
 	// CurveTable을 통해 무기 기본 데미지를 설정할 예정
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FScalableFloat WeaponBaseDamage;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSoftObjectPtr<UTexture2D> SoftWeaponIconTexture;
 };
