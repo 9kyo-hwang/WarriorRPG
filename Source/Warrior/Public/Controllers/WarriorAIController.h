@@ -6,6 +6,10 @@
 #include "AIController.h"
 #include "WarriorAIController.generated.h"
 
+struct FAIStimulus;
+class UAIPerceptionComponent;
+class UAISenseConfig_Sight;
+
 /**
  * 
  */
@@ -16,4 +20,15 @@ class WARRIOR_API AWarriorAIController : public AAIController
 	
 public:
 	AWarriorAIController(const FObjectInitializer& ObjectInitializer);
+	
+protected:
+	UFUNCTION()
+	virtual void OnEnemyPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
+	
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<UAIPerceptionComponent> EnemyPerceptionComponent;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<UAISenseConfig_Sight> AISenseConfig_Sight;
 };
