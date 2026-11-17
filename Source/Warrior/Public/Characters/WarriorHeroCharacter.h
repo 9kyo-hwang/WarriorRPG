@@ -7,6 +7,8 @@
 #include "WarriorHeroCharacter.generated.h"
 
 class UHeroCombatComponent;
+class UHeroUIComponent;
+
 struct FInputActionValue;
 struct FGameplayTag;
 
@@ -21,7 +23,10 @@ class WARRIOR_API AWarriorHeroCharacter : public AWarriorBaseCharacter
 public:
 	AWarriorHeroCharacter();
 	
+	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
 	FORCEINLINE UHeroCombatComponent* GetHeroCombatComponent() const { return HeroCombatComponent; }
+	virtual UPawnUIComponent* GetPawnUIComponent() const override;
+	FORCEINLINE virtual UHeroUIComponent* GetHeroUIComponent() const override { return HeroUIComponent; }
 	
 protected:
 	virtual void PossessedBy(AController* NewController) override;
@@ -39,6 +44,10 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Combat", meta=(AllowPrivateAccess=true))
 	TObjectPtr<UHeroCombatComponent> HeroCombatComponent;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="UI", meta=(AllowPrivateAccess=true))
+	TObjectPtr<UHeroUIComponent> HeroUIComponent;
+	
 #pragma endregion
 	
 #pragma region Inputs

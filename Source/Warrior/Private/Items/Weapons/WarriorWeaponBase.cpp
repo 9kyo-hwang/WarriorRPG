@@ -3,6 +3,7 @@
 
 #include "Items/Weapons/WarriorWeaponBase.h"
 
+#include "WarriorDebugHelper.h"
 #include "Components/BoxComponent.h"
 
 // Sets default values
@@ -18,5 +19,49 @@ AWarriorWeaponBase::AWarriorWeaponBase()
 	WeaponCollisionBox->SetupAttachment(GetRootComponent());
 	WeaponCollisionBox->SetBoxExtent(FVector(20));
 	WeaponCollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	WeaponCollisionBox->OnComponentBeginOverlap.AddUniqueDynamic(this, &ThisClass::OnCollisionBoxBeginOverlap);
+	WeaponCollisionBox->OnComponentEndOverlap.AddUniqueDynamic(this, &ThisClass::OnCollisionBoxEndOverlap);
+}
+
+void AWarriorWeaponBase::OnCollisionBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	// 무기를 올바르게 소지하였으며
+	APawn* WeaponOwningPawn = GetInstigator<APawn>();
+	checkf(WeaponOwningPawn, TEXT("[%s] 무기 오너를 Instigator로 지정하지 않았음"), *GetName());
+	
+	// 다른 폰을 타격했다면
+	if (APawn* HitPawn = Cast<APawn>(OtherActor))
+	{
+		// Player에게만 걸리는 검사. 무기 소지자와 타격자가 같으면 자해(?)
+		if (WeaponOwningPawn != HitPawn)
+		{
+			// 무기가 OtherActor에게 닿았음을 통지
+			OnWeaponHitTarget.ExecuteIfBound(OtherActor);
+		}
+		
+		// @TODO: 적 캐릭터 타격 판정
+	}
+}
+
+void AWarriorWeaponBase::OnCollisionBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	// 무기를 올바르게 소지하였으며
+	APawn* WeaponOwningPawn = GetInstigator<APawn>();
+	checkf(WeaponOwningPawn, TEXT("[%s] 무기 오너를 Instigator로 지정하지 않았음"), *GetName());
+	
+	// 다른 폰을 타격했다면
+	if (APawn* HitPawn = Cast<APawn>(OtherActor))
+	{
+		// Player에게만 걸리는 검사. 무기 소지자와 타격자가 같으면 자해(?)
+		if (WeaponOwningPawn != HitPawn)
+		{
+			// 무기가 OtherActor로부터 빠져나왔음을 통지
+			OnWeaponPulledFromTarget.ExecuteIfBound(OtherActor);
+		}
+		
+		// @TODO: 적 캐릭터 타격 판정
+	}
 }
 

@@ -8,6 +8,7 @@
 
 class UWarriorAbilitySystemComponent;
 class UWarriorGameplayAbility;
+class UGameplayEffect;
 
 /**
  * 
@@ -31,4 +32,7 @@ protected:
 	// 특정 조건에서 발동되는 Hit 반응 또는 사망 같은 어빌리티
 	UPROPERTY(EditDefaultsOnly, Category="StartupData")
 	TArray<TSubclassOf<UWarriorGameplayAbility>> ReactiveAbilities;
+	
+	UPROPERTY(EditDefaultsOnly, Category="StartupData")
+	TArray<TSubclassOf<UGameplayEffect>> StartupGameplayEffects;
 };
