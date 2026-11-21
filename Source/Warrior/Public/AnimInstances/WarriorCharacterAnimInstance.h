@@ -30,4 +30,7 @@ protected:
 	
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="AnimData|Locomotion")
 	bool bHasAcceleration;
+	
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="AnimData|Locomotion")
+	float LocomotionDirection;	// Strafing BlendSpace에 들어갈 값. 적과 플레이어 모두 필요
 };

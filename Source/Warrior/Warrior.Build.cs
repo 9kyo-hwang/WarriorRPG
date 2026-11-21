@@ -16,10 +16,10 @@ public class Warrior : ModuleRules
 			"InputCore", 
 			"EnhancedInput",
 			"GameplayTags",
-			"GameplayTasks"
+			"GameplayTasks",
 		});
 
-		PrivateDependencyModuleNames.AddRange(new string[] {  });
+		PrivateDependencyModuleNames.AddRange(new string[] { "AnimGraphRuntime" });
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
